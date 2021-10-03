@@ -17,7 +17,7 @@ export default function Application(props) {
   });
   
   const setDay = day => setState({ ...state, day });
-  const [interviewer, setInterviewer] = useState('Sylvia Palmer');
+//  const [interviewer, setInterviewer] = useState('Sylvia Palmer');
   const appointments = getAppointmentsForDay(state, state.day);
 
   useEffect(() => {
