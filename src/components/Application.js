@@ -6,7 +6,7 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import InterviewerListItem from "./InterviewerListItem";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -19,7 +19,8 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day });
 //  const [interviewer, setInterviewer] = useState('Sylvia Palmer');
   const appointments = getAppointmentsForDay(state, state.day);
-
+  const interviewers = getInterviewersForDay(state, state.day);
+  
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
@@ -33,11 +34,41 @@ export default function Application(props) {
 
   }, []);
 
-  const interviewers = {
-    id: 1,
-    name: "Sylvia Palmer",
-    avatar: "https://i.imgur.com/LpaY82x.png"
-  };
+
+
+  function bookInterview(id, interview) {
+    return new Promise((resolve, reject) => {
+      axios.put(`/api/appointments/${id}`,{interview})
+      .then(res => {
+        
+        console.log(res.status); 
+        const appointment = {
+          ...state.appointments[id],
+          interview: { ...interview }
+        };
+      
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };   
+        setState({...state, appointments});   
+        resolve(res)  
+      })
+      .catch(error => {
+        reject(error.message);
+      })
+    })
+      
+  }
+
+
+
+
+  // const interviewers = {
+  //   id: 1,
+  //   name: "Sylvia Palmer",
+  //   avatar: "https://i.imgur.com/LpaY82x.png"
+  // };
 
   return (
     <main className="layout">
@@ -64,15 +95,17 @@ export default function Application(props) {
       <section className="schedule">
           <Fragment>
             { appointments.map((appointment) => {
-              console.log(appointment);
+        
              const interview = getInterview(state, appointment.interview);
-             console.log(interview);
+            console.log(state);
               return(
                 <Appointment
                 key={appointment.id}
                 id={appointment.id}
                 time={appointment.time}
                 interview={interview}
+                interviewers={interviewers}
+                bookInterview={bookInterview}
                 />
               );
             }) }
