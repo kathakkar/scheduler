@@ -7,6 +7,7 @@ import DayList from "./DayList";
 import InterviewerListItem from "./InterviewerListItem";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import useApplicationData from 'hooks/useApplicationData';
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -51,7 +52,16 @@ export default function Application(props) {
           ...state.appointments,
           [id]: appointment
         };   
-        setState({...state, appointments});   
+
+      
+        for(let i = 0; i < state.days.length; i++){
+            if(state.days[i].appointments.includes(id)){
+              state.days[i].spots = state.days[i].spots - 1;
+              const days = state.days;
+              setState({...state, appointments, days});   
+            }
+        }
+        console.log(state);
         resolve(res)  
       })
       .catch(error => {
@@ -75,6 +85,15 @@ export default function Application(props) {
           ...state.appointments,
           [id]: appointment
         };   
+
+        for(let i = 0; i < state.days.length; i++){
+          if(state.days[i].appointments.includes(id)){
+            state.days[i].spots = state.days[i].spots + 1;
+            const days = state.days;
+            setState({...state, appointments, days});   
+          }
+        }
+
         setState({...state, appointments});   
         resolve(res);  
       })
@@ -85,13 +104,6 @@ export default function Application(props) {
 
   }
 
-
-
-  // const interviewers = {
-  //   id: 1,
-  //   name: "Sylvia Palmer",
-  //   avatar: "https://i.imgur.com/LpaY82x.png"
-  // };
 
   return (
     <main className="layout">
