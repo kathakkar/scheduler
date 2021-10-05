@@ -1,12 +1,7 @@
 import React from "react";
 
 export default function Show(props) {
-  const interviewscheduled = [];
-//  console.log(props.student);
-  // for(let i = 0; i < props.interviewer.length; i++){
-  // //  console.log(props.interviewer[i].name);
-  //   interviewscheduled.push(props.interviewer[i].name);
-  // }
+
   
   return (
     
@@ -24,13 +19,13 @@ export default function Show(props) {
             className="appointment__actions-button"
             src="images/edit.png"
             alt="Edit"
-            onClick={props.onEdit}
+            onClick={()=>props.onEdit(props.id)}
           />
           <img
             className="appointment__actions-button"
             src="images/trash.png"
             alt="Delete"
-            onClick={props.onDelete}
+            onClick={()=>props.onDelete()}
           />
         </section>
       </section>
