@@ -9,6 +9,7 @@ function InterviewerList(props) {
 
   for(let i = 0; i < props.interviewers.length; i++) {
     interviewelist.push(<InterviewerListItem
+    key= {props.interviewers[i].id}
     name={props.interviewers[i].name}
     avatar={props.interviewers[i].avatar}
     selected={props.interviewers[i].id === props.value}
