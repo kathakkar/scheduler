@@ -1,4 +1,3 @@
-import Appointment from "components/Appointment";
 
 export function getAppointmentsForDay(state, day) {
   const finalResult = [];

@@ -1,5 +1,4 @@
 import React from "react";
-import useApplicationData from 'hooks/useApplicationData';
 
 export default function Show(props) {
 console.log("show", props.student);

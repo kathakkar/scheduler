@@ -1,10 +1,7 @@
 import React from "react";
-import {useState, useEffect} from "react";
-import axios from 'axios';
 import { Fragment } from 'react';
 import "components/Application.scss";
 import DayList from "./DayList";
-import InterviewerListItem from "./InterviewerListItem";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import useApplicationData from 'hooks/useApplicationData';
