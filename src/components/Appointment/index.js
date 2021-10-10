@@ -28,8 +28,12 @@ export default function Appointment(props) {
 
   
   function save(name, interviewer, flag) {
-    
+    console.log("flag ", flag);
     transition(SAVING);
+    if(interviewer === undefined){
+      interviewer = null;
+    }
+
     const interview = {
       student: name,
       interviewer
